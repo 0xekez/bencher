@@ -18,8 +18,8 @@ pub fn get_config() -> Config {
     Config {
         peer_ip: "localhost:8000".to_string(),
         peer_file: "10mb.pdf".to_string(),
-        ping_log_file: "ping_log.txt".to_string(),
-        request_log_file: "request_log.txt".to_string(),
-        request_error_file: "request_err.txt".to_string(),
+        ping_log_file: "files/ping_log.txt".to_string(),
+        request_log_file: "files/request_log.txt".to_string(),
+        request_error_file: "files/request_err.txt".to_string(),
     }
 }
