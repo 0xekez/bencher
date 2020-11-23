@@ -2,6 +2,17 @@ use crate::config;
 use std::fs::{File, OpenOptions};
 use std::io::Write;
 use std::thread;
+use std::time::{Instant, SystemTime, UNIX_EPOCH};
+
+/// Gets the number of ms since the epoch in the form of a massive
+/// unsigned integer.
+fn ms_since_epoch() -> u128 {
+    let start = SystemTime::now();
+    let since_the_epoch = start
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards");
+    since_the_epoch.as_millis()
+}
 
 /// Essentially a wrapper for opening a file that creates it if it
 /// doesn't exist and appends to it if it does.
@@ -35,11 +46,12 @@ fn do_file_request(
     logfile: &mut File,
     errfile: &mut File,
 ) -> Result<(), String> {
-    let start = std::time::Instant::now();
+    let absolute_start = ms_since_epoch();
+    let start = Instant::now();
     match send_file_request(peer_ip, peer_file) {
         Ok(_) => {
             let duration = start.elapsed();
-            writeln!(logfile, "{:?}, {:?}", start, duration).map_err(|e| e.to_string())
+            writeln!(logfile, "{}, {:?}", absolute_start, duration).map_err(|e| e.to_string())
         }
         Err(what) => writeln!(errfile, "{}", what).map_err(|e| e.to_string()),
     }
