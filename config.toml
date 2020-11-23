@@ -1,5 +1,5 @@
-peer_public = "44.237.242.80"
-peer_private = "10.0.0.160"
+peer_public = "54.188.24.131"
+peer_private = "172.16.0.201"
 
 peer_file = "10mb.pdf"
 
