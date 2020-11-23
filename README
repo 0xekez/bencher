@@ -1,1 +1,42 @@
-benchmarking code for multicloud measurements.
+Benchmarking code for multicloud measurements.
+
+`config.toml` contains configuration information that the benchmarking
+code reads in and uses. Requests are made at a rate of 24 per day. By
+default they will download a 10mb file from the target ip address via
+the public and private ip address and log information about it to the
+log files.
+
+All log entries are in the form `<ms since epoch>, <data>` and
+enteries are seperated by newline characters. For error logs, `<data>`
+is a message about the type of error that occured. For timing logs
+`<data>` is the number of ms that the file request took.
+
+There are two branches in this repo called `vpcone` and `vpctwo` that
+the ec2 instances in our VPCs use to store their unique `config.toml`
+files. Otherwise they are the same as `main`.
+
+Each ec2 instance runs a public webserver that you can access by
+visiting `<instance ip>:8000`. There is a barebones html file there
+that has links to the log files for monitoring.
+
+## Building
+
+You'll need a c compiler and openssl-dev. If you don't have those
+you'll get errors during the build about a missing libc library and
+openssl install.
+
+To build:
+
+```
+cargo build --release
+```
+
+To run and start sending / receiving requests:
+
+```
+cargo run --release
+```
+
+Note that it is important to build and run in release mode as the http
+server library we're using will not accept external connections in
+debug mode.

@@ -53,7 +53,7 @@ fn do_file_request(
             let duration = start.elapsed();
             writeln!(logfile, "{}, {:?}", absolute_start, duration).map_err(|e| e.to_string())
         }
-        Err(what) => writeln!(errfile, "{}", what).map_err(|e| e.to_string()),
+        Err(what) => writeln!(errfile, "(), {}", absolute_start, what).map_err(|e| e.to_string()),
     }
 }
 
@@ -83,6 +83,6 @@ pub fn do_file_requests(config: &config::Config) -> Result<(), String> {
             &mut priv_errfile,
         )?;
 
-        thread::sleep(std::time::Duration::from_secs(10));
+        thread::sleep(std::time::Duration::from_secs(3600));
     }
 }
