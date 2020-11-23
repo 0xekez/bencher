@@ -11,6 +11,10 @@ edition = "2018"
 rocket = "0.4.6"
 # For requesting files that are being served.
 reqwest = { version = "0.10", features = ["blocking", "json"] }
+# For reading config information
+toml = "0.4.2"
+serde = "1.0"
+serde_derive = "1.0.117"
 
 [dependencies.rocket_contrib]
 version = "0.4.6"

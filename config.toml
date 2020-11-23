@@ -1,0 +1,10 @@
+peer_public = "44.237.242.80"
+peer_private = "10.0.0.160"
+
+peer_file = "10mb.pdf"
+
+pub_request_log_file = "files/pub_request_log.txt"
+priv_request_log_file = "files/priv_request_log.txt"
+
+pub_request_err_file = "files/pub_request_err.txt"
+priv_request_err_file = "files/priv_request_err.txt"
