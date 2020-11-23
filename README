@@ -13,7 +13,8 @@ is a message about the type of error that occured. For timing logs
 
 There are two branches in this repo called `vpcone` and `vpctwo` that
 the ec2 instances in our VPCs use to store their unique `config.toml`
-files. Otherwise they are the same as `main`.
+files. Otherwise they are the same as `main`. See the `config.toml`
+files there for an example setup.
 
 Each ec2 instance runs a public webserver that you can access by
 visiting `<instance ip>:8000`. There is a barebones html file there
