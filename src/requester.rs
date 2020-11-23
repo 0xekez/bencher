@@ -53,7 +53,7 @@ fn do_file_request(
             let duration = start.elapsed();
             writeln!(logfile, "{}, {:?}", absolute_start, duration).map_err(|e| e.to_string())
         }
-        Err(what) => writeln!(errfile, "(), {}", absolute_start, what).map_err(|e| e.to_string()),
+        Err(what) => writeln!(errfile, "{}, {}", absolute_start, what).map_err(|e| e.to_string()),
     }
 }
 
