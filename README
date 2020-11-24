@@ -41,3 +41,27 @@ cargo run --release
 Note that it is important to build and run in release mode as the http
 server library we're using will not accept external connections in
 debug mode.
+
+## Running
+
+The password for the ec2-user accounts on our AWS vpcs is
+`multicloud`. The best way to run this is to to run it inside of a
+systemctl service on linux. There is an example service file in
+`service/bencher.service`.
+
+To set that up, first verify that the paths in the service file match
+the ones on your local machine. Assuming they do, create a new file
+called `/etc/systemd/system/bencher.service` and paste the contents of
+`service/bencher.service` into there. Finally, run the following
+commands to start the service:
+
+```
+systemctl daemon-reload
+systemctl start bencher.service
+```
+
+To check on the status of the running service:
+
+```
+systemctl status bencher.service
+```
