@@ -8,3 +8,12 @@ priv_request_log_file = "files/priv_request_log.txt"
 
 pub_request_err_file = "files/pub_request_err.txt"
 priv_request_err_file = "files/priv_request_err.txt"
+
+pub_ping_log_file = "files/pub_ping_log.txt"
+priv_ping_log_file = "files/priv_ping_log.txt"
+
+pub_ping_err_file = "files/pub_ping_err.txt"
+priv_ping_err_file = "files/priv_ping_err.txt"
+
+ping_count = 5
+ping_timeout = 120

@@ -8,6 +8,6 @@ fn main() {
     let config = config::get_config();
 
     // We unwrap these as an error here is presumed to be fatal.
-    bencher::requester::do_file_requests(&config).unwrap();
+    bencher::do_pings_and_requests(&config).unwrap();
     handle.join().unwrap();
 }

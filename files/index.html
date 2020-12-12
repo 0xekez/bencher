@@ -4,13 +4,34 @@
     <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
     <title>ec2 server</title>
+    <style>
+      html {
+	  max-width: 450px;
+	  margin: auto;
+	  margin-top: 20px;
+	  line-height: 1.25;
+      }
+
+      h1 {
+	  text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
+    <h1>Logs!</h1>
+    <h2>File Requests</h2>
     <ul>
       <li><a href="priv_request_err.txt">Private request error log</a></li>
       <li><a href="priv_request_log.txt">Private request success log</a></li>
       <li><a href="pub_request_err.txt">Public request error log</a></li>
       <li><a href="pub_request_log.txt">Public request success log</a></li>
+    </ul>
+    <h2>Pings</h2>
+    <ul>
+      <li><a href="priv_ping_err.txt">Private ping error log</a></li>
+      <li><a href="priv_ping_log.txt">Private ping success log</a></li>
+      <li><a href="pub_ping_err.txt">Public ping error log</a></li>
+      <li><a href="pub_ping_log.txt">Public ping success log</a></li>
     </ul>
   </body>
 </html>
