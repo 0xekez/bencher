@@ -47,6 +47,7 @@ pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
         requester::do_file_request(
             &config.peer_public,
             &config.peer_file,
+            &config.peer_port,
             &mut pub_req_logfile,
             &mut pub_req_errfile,
         )?;
@@ -55,6 +56,7 @@ pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
         requester::do_file_request(
             &config.peer_private,
             &config.peer_file,
+            &config.peer_port,
             &mut priv_req_logfile,
             &mut priv_req_errfile,
         )?;

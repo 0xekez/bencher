@@ -6,8 +6,8 @@ use std::time::Instant;
 /// Sends a request to the specified ip for a specified file. Returns
 /// Ok if the request succedes and an error with information about the
 /// failure code otherwise.
-fn send_file_request(peer_ip: &String, peer_file: &String) -> Result<(), String> {
-    let url = format!("http://{}/{}", peer_ip, peer_file);
+fn send_file_request(peer_ip: &str, peer_file: &str, peer_port: &str) -> Result<(), String> {
+    let url = format!("http://{}:{}/{}", peer_ip, peer_port, peer_file);
     let resp = reqwest::blocking::get(&url).map_err(|e| e.to_string())?;
     if resp.status().is_success() {
         Ok(())
@@ -20,14 +20,15 @@ fn send_file_request(peer_ip: &String, peer_file: &String) -> Result<(), String>
 /// logfiles. Information about each request is written to the log
 /// file in the form <request start time>, <request elapsed time>.
 pub(crate) fn do_file_request(
-    peer_ip: &String,
-    peer_file: &String,
+    peer_ip: &str,
+    peer_file: &str,
+    peer_port: &str,
     logfile: &mut File,
     errfile: &mut File,
 ) -> Result<(), String> {
     let absolute_start = ms_since_epoch();
     let start = Instant::now();
-    match send_file_request(peer_ip, peer_file) {
+    match send_file_request(peer_ip, peer_file, peer_port) {
         Ok(_) => {
             let duration = start.elapsed();
             writeln!(logfile, "{}, {:?}", absolute_start, duration).map_err(|e| e.to_string())

@@ -7,6 +7,7 @@ pub struct Config {
     pub peer_public: String,
     pub peer_private: String,
 
+    pub peer_port: String,
     pub peer_file: String,
 
     pub pub_request_log_file: String,

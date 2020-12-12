@@ -1,6 +1,7 @@
 peer_public = "54.188.24.131"
 peer_private = "172.16.0.201"
 
+peer_port = "8000"
 peer_file = "10mb.pdf"
 
 pub_request_log_file = "files/pub_request_log.txt"
