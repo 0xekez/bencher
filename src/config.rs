@@ -14,10 +14,19 @@ pub struct Config {
 
     pub pub_request_err_file: String,
     pub priv_request_err_file: String,
+
+    pub pub_ping_log_file: String,
+    pub priv_ping_log_file: String,
+
+    pub pub_ping_err_file: String,
+    pub priv_ping_err_file: String,
+
+    pub ping_count: u32,
+    pub ping_timeout: u32,
 }
 
-/// Get's the config information for this session. Eventually this
-/// should probably read from a toml file, but this works for now.
+/// Get's the config information for this session. Expects a file
+/// named "config.toml" to be in the cwd of this thread.
 pub fn get_config() -> Config {
     toml::from_str(&std::fs::read_to_string("config.toml").unwrap()).unwrap()
 }
