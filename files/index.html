@@ -16,10 +16,12 @@
 	  text-decoration: underline;
       }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
   </head>
   <body>
     <h1>Logs!</h1>
     <h2>File Requests</h2>
+    <canvas id="requestChart" width="100%" height="50px"></canvas>
     <ul>
       <li><a href="priv_request_err.txt">Private request error log</a></li>
       <li><a href="priv_request_log.txt">Private request success log</a></li>
@@ -34,4 +36,67 @@
       <li><a href="pub_ping_log.txt">Public ping success log</a></li>
     </ul>
   </body>
+  <script>
+    function extractData(resp) {
+	return resp.split("\n").map(x=>x.split(", ")[1]).map(x=>parseFloat(x));
+    }
+    function httpGetAsync(theUrl, callback) {
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+		callback(xmlHttp.responseText);
+	}
+	xmlHttp.open("GET", theUrl, true); // true for asynchronous
+	xmlHttp.send(null);
+    }
+    let pubData = [];
+    let privData = [];
+    let dataCount = 0;
+    function getAndPlot(publicUrl, privateUrl) {
+	let http = new XMLHttpRequest();
+	let callback = function(response) {
+		if (dataCount == 0) {
+		    pubData = extractData(response);
+		} else {
+		    privData = extractData(response);
+		}
+		dataCount += 1;
+		if (dataCount == 2) {
+		    let ctx = document.getElementById("requestChart");
+		    let myChart = new Chart(ctx, {
+			type: "line",
+			data: {
+			    labels: Array.from({
+				length: Math.min(pubData.length, privData.length)
+			    }, (x, i) => i),
+			    datasets: [{
+				label: 'public requests',
+				data: pubData,
+				fill: false,
+				pointRadius: 0,
+				borderColor: "blue",
+				borderWidth: 1,
+			    }, {
+				label: 'private requests',
+				data: privData,
+				fill: false,
+				pointRadius: 0,
+				borderColor: "red",
+				borderWidth: 1,
+			    }]
+			},
+			options: {
+			    title: {
+				display: true,
+				text: 'Public & Private Request Time (in ms)',
+			    }
+			}
+		    });
+		}
+	}
+	httpGetAsync(publicUrl, callback);
+	httpGetAsync(privateUrl, callback);
+    }
+    getAndPlot("pub_request_log.txt", "priv_request_log.txt");
+  </script>
 </html>
