@@ -1,20 +1,20 @@
-peer_public = "44.237.242.80"
-peer_private = "10.0.0.160"
+hot_public = "20.47.108.100"
+cold_public = "52.150.10.46"
 
 peer_port = "8000"
 peer_file = "10mb.pdf"
 
-pub_request_log_file = "files/pub_request_log.txt"
-priv_request_log_file = "files/priv_request_log.txt"
+hot_request_log_file = "files/pub_request_log.txt"
+cold_request_log_file = "files/priv_request_log.txt"
 
-pub_request_err_file = "files/pub_request_err.txt"
-priv_request_err_file = "files/priv_request_err.txt"
+hot_request_err_file = "files/pub_request_err.txt"
+cold_request_err_file = "files/priv_request_err.txt"
 
-pub_ping_log_file = "files/pub_ping_log.txt"
-priv_ping_log_file = "files/priv_ping_log.txt"
+hot_ping_log_file = "files/pub_ping_log.txt"
+cold_ping_log_file = "files/priv_ping_log.txt"
 
-pub_ping_err_file = "files/pub_ping_err.txt"
-priv_ping_err_file = "files/priv_ping_err.txt"
+hot_ping_err_file = "files/pub_ping_err.txt"
+cold_ping_err_file = "files/priv_ping_err.txt"
 
 ping_count = 5
 ping_timeout = 120

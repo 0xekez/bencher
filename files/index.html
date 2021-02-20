@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
-    <title>ec2 server</title>
+    <title>ec2 server - hold / cold potato</title>
     <style>
       html {
 	  max-width: 450px;
@@ -23,17 +23,17 @@
     <h2>File Requests</h2>
     <canvas id="requestChart" width="100%" height="50px"></canvas>
     <ul>
-      <li><a href="priv_request_err.txt">Private request error log</a></li>
-      <li><a href="priv_request_log.txt">Private request success log</a></li>
-      <li><a href="pub_request_err.txt">Public request error log</a></li>
-      <li><a href="pub_request_log.txt">Public request success log</a></li>
+      <li><a href="cold_request_err.txt">Private request error log</a></li>
+      <li><a href="cold_request_log.txt">Private request success log</a></li>
+      <li><a href="hot_request_err.txt">Public request error log</a></li>
+      <li><a href="hot_request_log.txt">Public request success log</a></li>
     </ul>
     <h2>Pings</h2>
     <ul>
-      <li><a href="priv_ping_err.txt">Private ping error log</a></li>
-      <li><a href="priv_ping_log.txt">Private ping success log</a></li>
-      <li><a href="pub_ping_err.txt">Public ping error log</a></li>
-      <li><a href="pub_ping_log.txt">Public ping success log</a></li>
+      <li><a href="cold_ping_err.txt">Private ping error log</a></li>
+      <li><a href="cold_ping_log.txt">Private ping success log</a></li>
+      <li><a href="hot_ping_err.txt">Public ping error log</a></li>
+      <li><a href="hot_ping_log.txt">Public ping success log</a></li>
     </ul>
   </body>
   <script>
@@ -70,14 +70,14 @@
 				length: Math.min(pubData.length, privData.length)
 			    }, (x, i) => i),
 			    datasets: [{
-				label: 'public requests',
+				label: 'hot requests',
 				data: pubData,
 				fill: false,
 				pointRadius: 0,
 				borderColor: "blue",
 				borderWidth: 1,
 			    }, {
-				label: 'private requests',
+				label: 'cold requests',
 				data: privData,
 				fill: false,
 				pointRadius: 0,
@@ -97,6 +97,6 @@
 	httpGetAsync(publicUrl, callback);
 	httpGetAsync(privateUrl, callback);
     }
-    getAndPlot("pub_request_log.txt", "priv_request_log.txt");
+    getAndPlot("hot_request_log.txt", "cold_request_log.txt");
   </script>
 </html>

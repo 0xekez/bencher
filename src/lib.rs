@@ -30,22 +30,22 @@ pub(crate) fn open_logfile(name: &String) -> Result<File, String> {
 /// Does the grunt work of the library. Sends pings and requests to
 /// according to the configuration at a rate of once per hour.
 pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
-    let mut pub_req_logfile = open_logfile(&config.pub_request_log_file)?;
-    let mut pub_req_errfile = open_logfile(&config.pub_request_err_file)?;
+    let mut pub_req_logfile = open_logfile(&config.hot_request_log_file)?;
+    let mut pub_req_errfile = open_logfile(&config.hot_request_err_file)?;
 
-    let mut priv_req_logfile = open_logfile(&config.priv_request_log_file)?;
-    let mut priv_req_errfile = open_logfile(&config.priv_request_err_file)?;
+    let mut priv_req_logfile = open_logfile(&config.cold_request_log_file)?;
+    let mut priv_req_errfile = open_logfile(&config.cold_request_err_file)?;
 
-    let mut pub_png_logfile = open_logfile(&config.pub_ping_log_file)?;
-    let mut pub_png_errfile = open_logfile(&config.pub_ping_err_file)?;
+    let mut pub_png_logfile = open_logfile(&config.hot_ping_log_file)?;
+    let mut pub_png_errfile = open_logfile(&config.hot_ping_err_file)?;
 
-    let mut priv_png_logfile = open_logfile(&config.priv_ping_log_file)?;
-    let mut priv_png_errfile = open_logfile(&config.priv_ping_err_file)?;
+    let mut priv_png_logfile = open_logfile(&config.cold_ping_log_file)?;
+    let mut priv_png_errfile = open_logfile(&config.cold_ping_err_file)?;
 
     loop {
         // Make a file request via the public ip address.
         requester::do_file_request(
-            &config.peer_public,
+            &config.hot_public,
             &config.peer_file,
             &config.peer_port,
             &mut pub_req_logfile,
@@ -54,7 +54,7 @@ pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
 
         // Make a file request via the private ip address.
         requester::do_file_request(
-            &config.peer_private,
+            &config.cold_public,
             &config.peer_file,
             &config.peer_port,
             &mut priv_req_logfile,
@@ -65,7 +65,7 @@ pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
         pinger::do_ping(
             config.ping_count,
             config.ping_timeout,
-            &config.peer_public,
+            &config.hot_public,
             &mut pub_png_logfile,
             &mut pub_png_errfile,
         )?;
@@ -74,7 +74,7 @@ pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
         pinger::do_ping(
             config.ping_count,
             config.ping_timeout,
-            &config.peer_public,
+            &config.hot_public,
             &mut priv_png_logfile,
             &mut priv_png_errfile,
         )?;

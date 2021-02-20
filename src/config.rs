@@ -4,23 +4,23 @@ use toml;
 /// Config information for benchmarking.
 #[derive(Deserialize)]
 pub struct Config {
-    pub peer_public: String,
-    pub peer_private: String,
+    pub hot_public: String,
+    pub cold_public: String,
 
     pub peer_port: String,
     pub peer_file: String,
 
-    pub pub_request_log_file: String,
-    pub priv_request_log_file: String,
+    pub hot_request_log_file: String,
+    pub cold_request_log_file: String,
 
-    pub pub_request_err_file: String,
-    pub priv_request_err_file: String,
+    pub hot_request_err_file: String,
+    pub cold_request_err_file: String,
 
-    pub pub_ping_log_file: String,
-    pub priv_ping_log_file: String,
+    pub hot_ping_log_file: String,
+    pub cold_ping_log_file: String,
 
-    pub pub_ping_err_file: String,
-    pub priv_ping_err_file: String,
+    pub hot_ping_err_file: String,
+    pub cold_ping_err_file: String,
 
     pub ping_count: u32,
     pub ping_timeout: u32,
