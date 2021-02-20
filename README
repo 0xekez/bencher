@@ -22,7 +22,7 @@ that has links to the log files for monitoring.
 
 ## Building
 
-You'll need a c compiler and openssl-dev. If you don't have those
+You'll need a c compiler and openssl-devel. If you don't have those
 you'll get errors during the build about a missing libc library and
 openssl install.
 
