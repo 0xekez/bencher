@@ -2,6 +2,7 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use std::fs::File;
 use std::io::Write;
+use std::process::Stdio;
 use std::process::{Command, Output};
 use std::time::Duration;
 
@@ -155,14 +156,17 @@ pub fn do_ping(
 /// assuming that this works. If nmap fails to reach the peer we'll
 /// just end up returning an empty string.
 pub fn do_tcp_ping(peer_address: &str, peer_port: &str) -> Result<String, String> {
-    let command = format!(
-        "nmap -sS -Pn -n -p{} {} | rg latency | rg \"[[:digit:]]+\\.[[:digit:]]+\" --only-matching",
-        peer_port, peer_address
-    );
-    let output = Command::new(&command)
+    let output = Command::new("sh")
+        .arg("do_tcp_ping.sh")
+        .arg(peer_address)
+        .arg(peer_port)
         .output()
-        .map_err(|e| format!("$ {}\n{}", command, e))?;
-    Ok(String::from_utf8_lossy(&output.stdout).to_string())
+        .map_err(|e| e.to_string())?;
+    let latency = String::from_utf8_lossy(&output.stdout).to_string();
+    let latency = latency.parse::<f32>().map_err(|e| e.to_string())?;
+    // nmap gives us a number in seconds.
+    let latency = format!("{}ms", latency * 1000);
+    Ok(latency)
 }
 
 /// Used internally to send REQUEST_COUNT pings to PEER_ADDRESS with
