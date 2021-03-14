@@ -2,7 +2,6 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use std::fs::File;
 use std::io::Write;
-use std::process::Stdio;
 use std::process::{Command, Output};
 use std::time::Duration;
 
@@ -165,7 +164,7 @@ pub fn do_tcp_ping(peer_address: &str, peer_port: &str) -> Result<String, String
     let latency = String::from_utf8_lossy(&output.stdout).to_string();
     let latency = latency.parse::<f32>().map_err(|e| e.to_string())?;
     // nmap gives us a number in seconds.
-    let latency = format!("{}ms", latency * 1000);
+    let latency = format!("{}ms", latency * 1000f32);
     Ok(latency)
 }
 
