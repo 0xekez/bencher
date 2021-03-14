@@ -4,17 +4,19 @@ cold_public = "52.150.10.46"
 peer_port = "8000"
 peer_file = "10mb.pdf"
 
-hot_request_log_file = "files/pub_request_log.txt"
-cold_request_log_file = "files/priv_request_log.txt"
+tcp_ping = true
 
-hot_request_err_file = "files/pub_request_err.txt"
-cold_request_err_file = "files/priv_request_err.txt"
+hot_request_log_file = "files/hot_request_log.txt"
+cold_request_log_file = "files/cold_request_log.txt"
 
-hot_ping_log_file = "files/pub_ping_log.txt"
-cold_ping_log_file = "files/priv_ping_log.txt"
+hot_request_err_file = "files/hot_request_err.txt"
+cold_request_err_file = "files/cold_request_err.txt"
 
-hot_ping_err_file = "files/pub_ping_err.txt"
-cold_ping_err_file = "files/priv_ping_err.txt"
+hot_ping_log_file = "files/hot_ping_log.txt"
+cold_ping_log_file = "files/cold_ping_log.txt"
+
+hot_ping_err_file = "files/hot_ping_err.txt"
+cold_ping_err_file = "files/cold_ping_err.txt"
 
 ping_count = 5
 ping_timeout = 120

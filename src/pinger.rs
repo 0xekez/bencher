@@ -125,19 +125,44 @@ pub fn do_ping(
     request_count: u32,
     timeout: u32,
     peer_address: &str,
+    peer_port: &str,
+    tcp_ping: bool,
     logfile: &mut File,
     errfile: &mut File,
 ) -> Result<(), String> {
     let absolute_start = crate::ms_since_epoch();
-    let res = do_ping_internal(
-        request_count,
-        peer_address,
-        Duration::new(timeout.into(), 0),
-    );
+    let res = if tcp_ping {
+        do_tcp_ping(peer_address, peer_port)
+    } else {
+        do_ping_internal(
+            request_count,
+            peer_address,
+            Duration::new(timeout.into(), 0),
+        )
+        .map(|pr| pr.to_string())
+    };
     match res {
         Err(e) => writeln!(errfile, "{}, {}", absolute_start, e).map_err(|e| e.to_string()),
         Ok(pr) => writeln!(logfile, "{}\n{}\n", absolute_start, pr).map_err(|e| e.to_string()),
     }
+}
+
+/// Uses nmap to perform a tcp ping of sorts to PEER_ADDRESS on
+/// PEER_PORT.
+///
+/// TODO(zeke): this could really be more robust. So far over all of
+/// our testing we have not seen a case where a ping fails so I'm just
+/// assuming that this works. If nmap fails to reach the peer we'll
+/// just end up returning an empty string.
+pub fn do_tcp_ping(peer_address: &str, peer_port: &str) -> Result<String, String> {
+    let command = format!(
+        "nmap -sS -Pn -n -p{} {} | rg latency | rg \"[[:digit:]]+\\.[[:digit:]]+\" --only-matching",
+        peer_port, peer_address
+    );
+    let output = Command::new(&command)
+        .output()
+        .map_err(|e| format!("$ {}\n{}", command, e))?;
+    Ok(String::from_utf8_lossy(&output.stdout).to_string())
 }
 
 /// Used internally to send REQUEST_COUNT pings to PEER_ADDRESS with

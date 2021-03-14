@@ -66,6 +66,8 @@ pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
             config.ping_count,
             config.ping_timeout,
             &config.hot_public,
+            &config.peer_port,
+            config.tcp_ping,
             &mut pub_png_logfile,
             &mut pub_png_errfile,
         )?;
@@ -75,6 +77,8 @@ pub fn do_pings_and_requests(config: &config::Config) -> Result<(), String> {
             config.ping_count,
             config.ping_timeout,
             &config.hot_public,
+            &config.peer_port,
+            config.tcp_ping,
             &mut priv_png_logfile,
             &mut priv_png_errfile,
         )?;

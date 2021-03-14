@@ -10,6 +10,8 @@ pub struct Config {
     pub peer_port: String,
     pub peer_file: String,
 
+    pub tcp_ping: bool,
+
     pub hot_request_log_file: String,
     pub cold_request_log_file: String,
 
