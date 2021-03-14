@@ -161,7 +161,8 @@ pub fn do_tcp_ping(peer_address: &str, peer_port: &str) -> Result<String, String
         .arg(peer_port)
         .output()
         .map_err(|e| e.to_string())?;
-    let latency = String::from_utf8_lossy(&output.stdout).to_string();
+    let latency = String::from_utf8_lossy(&output.stdout).trim().to_string();
+    println!("got ({})", latency);
     let latency = latency.parse::<f32>().map_err(|e| e.to_string())?;
     // nmap gives us a number in seconds.
     let latency = format!("{}ms", latency * 1000f32);
