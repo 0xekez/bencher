@@ -1,3 +1,7 @@
+function setup_http() {
+    sudo python3 -m http.server 80 &
+}
+
 function setup_target() {
     local target=$1
 
@@ -13,6 +17,8 @@ function measure_target() {
     echo "measure: ($target)"
     bash measure.sh l $target >> ${target}_latency.csv
     bash measure.sh t $target >> ${target}_throughput.csv
+    bash plot.sh latency ${target}_latency.csv > ${target}_latency.svg
+    bash plot.sh throughput ${target}_throughput.csv > ${target}_throughput.svg
 }
 
 case $1 in
@@ -25,6 +31,8 @@ case $1 in
 	done
 
 	bash listen.sh up
+		
+	setup_http
 
 	while true
 	do
