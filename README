@@ -1,0 +1,29 @@
+# 🪑
+
+- `/iperf-sender-9000`
+
+Listens for tcp connections on port 8657. Programs that would like to
+have an iperf3 test sent to them connect and send an address that they
+would like the program to run a test against.
+
+For example, to run a test against `10.0.1.1` which has a listening
+iperf3 daemon:
+
+```bash
+echo "10.0.1.1" | nc <addr> 8675
+```
+
+- `/cpu-plotter`
+
+Works together with an `iperf-sender-9000` to trigger incoming iperf3
+tests and then measures cpu usage for the duration of the test.
+
+- `/v2`
+
+A program for measuring TCP latency and throughput via qperf and
+iperf3 respectively. Written in bash and much less terrible than the
+venerable `/v1`.
+
+- `/v1`
+
+A program that does what `/v2` does but in a worse way.
