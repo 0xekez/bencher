@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt -y install emacs jq git iperf3 qperf
+sudo apt -y install emacs jq git iperf3 qperf gnuplot
 git clone https://github.com/ZekeMedley/bencher.git
 
 # configure bencher.service
