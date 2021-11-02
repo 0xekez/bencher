@@ -18,6 +18,25 @@ echo "10.0.1.1" | nc <addr> 8675
 Works together with an `iperf-sender-9000` to trigger incoming iperf3
 tests and then measures cpu usage for the duration of the test.
 
+- `/ipsec-tunneler`
+
+Creates an ipsec tunnel between two machines. Example invocation to
+connect machines with addresses `172.31.30.165`, and `172.31.27.164`:
+
+```
+sudo ./tunnel.sh up 172.31.30.165 172.31.27.164 10.0.0.1 10.0.1.1
+```
+
+This will bind the addresses `10.0.0.1` and `10.0.1.1` to the loopback
+interfaces on the machines. traffic should then flow over the ipsec
+tunnel when sent to those addresses.
+
+Once can watch the ipsec traffic by running:
+
+```
+sudo tcpdump -n  -i eth0 esp
+```
+
 - `/v2`
 
 A program for measuring TCP latency and throughput via qperf and
