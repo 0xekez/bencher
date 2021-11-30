@@ -140,24 +140,25 @@ def generateRules(n):
     return ret
 
 def generateSetElements(n):
-    ret = []
+    elems = []
     for _ in range(n):
         address = ".".join([str(random.randint(0, 255)) for _ in range(4)])
         while address.startswith("192.168"):
             address = ".".join([str(random.randint(0, 255)) for _ in range(4)])
         prefixbits = random.randint(16, 32)
-        ret.append(
-            { "add": { "element": {
-                "family": "ip",
-                "table": "mytable",
-                "name": "whitelist",
-                "elem": { "prefix": {
-                    "addr": address,
-                    "len": prefixbits,
-                } },
-            } } },
+        elems.append(
+            { "prefix": {
+                "addr": address,
+                "len": prefixbits,
+            } }
         )
-    return ret
+    
+    return { "add": { "element": {
+        "family": "ip",
+        "table": "mytable",
+        "name": "whitelist",
+        "elem": elems,
+    } } }
 
 def run(testname="test"):
     teardownNFT()
