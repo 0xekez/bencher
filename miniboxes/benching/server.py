@@ -33,12 +33,17 @@ def setupNFT(tableName="mytable", chainName="input"):
             "type": "ipv4_addr",
             # "policy"
             "flags": ["interval"],
+            "elem": { "prefix": {
+                "addr": "192.168.200.0",
+                "len": "24",
+            } },
         } } },
         { "add": { "chain": {
             "family": "ip",
             "table": tableName,
             "name": chainName,
             "hook": "input",
+            "policy": "drop",
         } } },
         { "add": { "rule": {
             "family": "ip",
@@ -145,34 +150,37 @@ def generateSetElements(n):
                 "family": "ip",
                 "table": "mytable",
                 "name": "whitelist",
-                "elem": f"{address}/{prefixbits}",
+                "elem": { "prefix": {
+                    "addr": address,
+                    "len": prefixbits,
+                } },
             } } },
         )
-
-def jam(n):
-    nftPayload = { "nftables": [] }
-    validateAndExecute(nftPayload)
-
-
+    return ret
 
 def run(testname="test"):
     numRules = 0
     initial = psutil.virtual_memory()
     baselineMemoryUsage = initial.total - initial.available
-    for n in [30000]:
-        # install rules (non-blocking)
+    outputFile = f"{testname}.log"
+    for n in [3000]:
+        # install rules (quick)
+        nftPayload = { "nftables": generateSetElements(n - numRules)}
+        validateAndExecute(nftPayload)
+        numRules = n
 
-
-        # get memory (non-blocking)
+        # get memory (quick)
         usedMemory = initial.total - psutil.virtual_memory().available
-        # start server (non-blocking)
+
         # start cpu logging (non-blocking)
         # ssh to client (blocking)
         # server stops automatically
         # stop cpu logging
-        subprocess.run(f"./start_iperf3_and_cpu.sh iperf3-{testname}-{n}.log cpu-{testname}-{n}.log", shell=True, capture_output=True)
+        cpuLog = f"cpu-{testname}-{n}.log"
+        bwLog = f"qperfBw-{testname}-{n}.log"
+        latLog = f"qperfLat-{testname}-{n}.log"
+        subprocess.run(f"./start_cpu_and_signal.sh {cpuLog} {bwLog} {latLog}", shell=True)
 
-        # stop and gather cpu log
+        # gather cpu log
 
-
-# run()
+run()
