@@ -43,7 +43,9 @@ def setupNFT(tableName="mytable", chainName="input"):
             "family": "ip",
             "table": tableName,
             "name": chainName,
+            "type": "filter",
             "hook": "input",
+            "priority": 0,
             "policy": "drop",
         } } },
         { "add": { "rule": {
@@ -153,12 +155,12 @@ def generateSetElements(n):
             } }
         )
     
-    return { "add": { "element": {
+    return [{ "add": { "element": {
         "family": "ip",
         "table": "mytable",
         "name": "whitelist",
         "elem": elems,
-    } } }
+    } } }]
 
 def run(testname="test"):
     teardownNFT()
@@ -166,7 +168,6 @@ def run(testname="test"):
     numRules = 0
     initial = psutil.virtual_memory()
     baselineMemoryUsage = initial.total - initial.available
-    outputFile = f"{testname}.log"
     for n in [3000]:
         # install rules (quick)
         nftPayload = { "nftables": generateSetElements(n - numRules)}
@@ -175,7 +176,8 @@ def run(testname="test"):
 
         # get memory (quick)
         usedMemory = initial.total - psutil.virtual_memory().available
-
+        with open(f"ram-{testname}-{n}.log", "w") as f:
+            f.write(str(usedMemory))
         # start cpu logging (non-blocking)
         # ssh to client (blocking)
         # server stops automatically
