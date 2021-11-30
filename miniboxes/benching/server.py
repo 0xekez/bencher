@@ -33,10 +33,11 @@ def setupNFT(tableName="mytable", chainName="input"):
             "type": "ipv4_addr",
             # "policy"
             "flags": ["interval"],
-            "elem": { "prefix": {
-                "addr": "192.168.200.0",
-                "len": "24",
+            "elem": [{ "prefix": {
+                "addr": "192.168.200.1",
+                "len": 24,
             } },
+            ],
         } } },
         { "add": { "chain": {
             "family": "ip",
@@ -159,6 +160,8 @@ def generateSetElements(n):
     return ret
 
 def run(testname="test"):
+    teardownNFT()
+    setupNFT()
     numRules = 0
     initial = psutil.virtual_memory()
     baselineMemoryUsage = initial.total - initial.available
