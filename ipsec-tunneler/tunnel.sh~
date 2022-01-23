@@ -5,7 +5,6 @@ set -o pipefail
 
 case $1 in
     up)
-	shift
 	if [ "$4" == "" ]; then
 	    echo "usage: $0 <my address> <their address> <my private address> <their private address>"
 	    exit 1

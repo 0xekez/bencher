@@ -21,7 +21,21 @@
   </head>
   <body>
     <h1>🐒 vs 🦖</h1>
+    <p>
+      Measurements showing the CPU usage of a machine while receiving
+      a regular iperf test and an iperf test over an ipsec
+      connection. All connections are done using private addresses of
+      machines inside of an AWS vpc and using 10 parallel
+      connections. The hope is that this means that we're CPU bound
+      and will see something interesting here.
+    </p>
     <h2>regular degular</h2>
-    <img src="data.svg"/>
+    <img src="degular.svg"/>
+    <h2>ipsec vpn</h2>
+    <img src="priv.svg"/>
+    <h2>iptables saddr filter</h2>
+    <img src="tables.svg"/>
+    <h2>iptables saddr filter with 5k rules</h2>
+    <img src="many-tables.svg"/>
   </body>
 </html>
